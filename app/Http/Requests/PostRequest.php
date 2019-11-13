@@ -27,17 +27,14 @@ class PostRequest extends FormRequest
                 'gym_img' => 'required|file|image|mimes:jpeg,png,jpg,gif|max:2048',
                 'title' => 'required|max:20',
                 'about_group' => 'required|max:140',
-                // 'gym_name' => 'required|not_in: 0',
-                // 'date' => 'required|date',
-                // 'time' => 'required',
                 'fee' => 'nullable',
                 'number_limit' => 'required',
                 'sex_limit' => 'required',
-                'user_id' => 'required|numeric',
+                'user_id' => 'required',
                 'gym_id' => 'required',
                 'event_date' => 'required|date',
-                'start_time' => 'required|',
-                'end_time' => 'required|',
+                'start_time' => 'required|date_format:H:i',
+                'end_time' => 'required|date_format:H:i|after:start_time',
         ];
     }
 }

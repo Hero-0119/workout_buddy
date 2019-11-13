@@ -11,7 +11,7 @@ class GymsTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('gyms')->insert(
+        DB::table('gyms')->insert([
             [
             'gym_name' => '豊島区 池袋スポーツジム',
             'latitude' => '35.734652',
@@ -25,6 +25,6 @@ class GymsTableSeeder extends Seeder
             'latitude' => '35.691753',
             'longitude' => '139.788821',
             ]
-        );
+        ]);
     }
 }

@@ -43,20 +43,20 @@
               <div class="form-group">
                   <label for="exampleFormControlSelect1">施設名</label>
                   <select class="form-control" id="exampleFormControlSelect1" name="gym_id">
-                      <option selected="">選択する</option>
-                      <option value="1">豊島区池袋スポーツジム</option>
-                      <option value="1">豊島区池袋スポーツジム2</option>
-                      <option value="1">豊島区池袋スポーツジム3</option>
+                      <option value="">選択する</option>
+                      @foreach($gyms as $gym)
+                      <option value="{{ $gym->id }}">{{ $gym->gym_name }}</option>
+                      @endforeach
                   </select>
               </div>
 
               <div class="form-group row">
-                <label for="exampleFormControlSelect1" class="col-sm-12">開始日時</label>
-                <div class="col-sm-6">
+                <label for="exampleFormControlSelect1" class="col-sm-12">イベント開催日時</label>
+                <div class="col-sm-4">
                     <div class="form-group">
                         <div class="input-group date" id="datetimepicker" data-target-input="nearest">
                             <label for="datetimepicker1" class="pt-2 pr-2">日付:</label>
-                            <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker"/>
+                            <input type="date" class="form-control datetimepicker-input" data-target="#datetimepicker" name="event_date" value="{{ $post->event_date }}">
                             <div class="input-group-append" data-target="#datetimepicker" data-toggle="datetimepicker">
                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                             </div>
@@ -70,11 +70,29 @@
                         });
                     });
                 </script>
-                <div class="col-sm-6">
+                <div class="col-sm-4">
                     <div class="form-group">
                         <div class="input-group date" id="datetimepicker3" data-target-input="nearest">
-                            <label for="datetimepicker2" class="pt-2 pr-2">時間:</label>
-                            <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker3"/>
+                            <label for="datetimepicker2" class="pt-2 pr-2">開始時間:</label>
+                            <input type="time" class="form-control datetimepicker-input" data-target="#datetimepicker3" name="start_time" value="{{ $post->start_time }}">
+                            <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
+                                <div class="input-group-text"><i class="fa fa-clock"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    $(function () {
+                        $('#datetimepicker2').datetimepicker({
+                            format: 'LT'
+                        });
+                    });
+                </script>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <div class="input-group date" id="datetimepicker3" data-target-input="nearest">
+                            <label for="datetimepicker2" class="pt-2 pr-2">終了時間:</label>
+                            <input type="time" class="form-control datetimepicker-input" data-target="#datetimepicker3" name="end_time" value="{{ $post->end_time }}">
                             <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
                                 <div class="input-group-text"><i class="fa fa-clock"></i></div>
                             </div>
@@ -98,26 +116,28 @@
               <div class="form-group">
                   <label for="exampleFormControlSelect1">募集人数</label>
                   <select class="form-control" id="exampleFormControlSelect1" name="number_limit">
-                      <option value="0" selected="">指定無し</option>
-                      <option value="1">1名</option>
-                      <option value="2">2名</option>
-                      <option value="3">3名</option>
-                      <option value="4">4名</option>
-                      <option value="5">5名</option>
-                      <option value="6">6名</option>
+                      <option value="指定無し" selected="">指定無し</option>
+                      <option value="1名">1名</option>
+                      <option value="2名">2名</option>
+                      <option value="3名">3名</option>
+                      <option value="4名">4名</option>
+                      <option value="5名">5名</option>
+                      <option value="6名">6名</option>
                   </select>
               </div>
 
               <div class="form-group">
                   <label for="exampleFormControlSelect1">性別の限定</label>
                   <select class="form-control" id="exampleFormControlSelect1" name="sex_limit">
-                      <option value="0" selected="">限定無し</option>
-                      <option value="1">男性のみ</option>
-                      <option value="2">女性のみ</option>
+                      <option value="限定無し" selected="">限定無し</option>
+                      <option value="男性のみ">男性のみ</option>
+                      <option value="女性のみ">女性のみ</option>
                   </select>
               </div>
 
               <input type="hidden" name="user_id" value="{{ Auth::id() }}">
+
+              <input type="button" onclick="history.back()" value="戻る" class="btn btn-success">
 
               <button type="submit" class="btn btn-primary">更新</button>
             </form>

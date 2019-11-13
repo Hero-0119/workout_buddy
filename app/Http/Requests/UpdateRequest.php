@@ -27,14 +27,14 @@ class UpdateRequest extends FormRequest
                 'gym_img' => 'file|image|mimes:jpeg,png,jpg,gif|max:2048',
                 'title' => 'required|max:20',
                 'about_group' => 'required|max:140',
-                // 'gym_name' => 'required|not_in: 0',
-                // 'date' => 'required|date',
-                // 'time' => 'required',
                 'fee' => 'nullable',
                 'number_limit' => 'required',
                 'sex_limit' => 'required',
                 'user_id' => 'required|numeric',
                 'gym_id' => 'required',
+                'event_date' => 'required|date',
+                'start_time' => 'required|date_format:H:i:s',
+                'end_time' => 'required|date_format:H:i:s',
         ];
     }
 }

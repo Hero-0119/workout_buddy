@@ -85,8 +85,12 @@ class PostController extends Controller
      */
     public function edit($id)
     {
+        $gyms = Gym::all();
         $post = Post::findOrFail($id);
-        return view('posts.edit', compact('post'));
+        return view('posts.edit', [
+            'post' => $post,
+            'gyms' => $gyms,
+            ]);
     }
 
     /**
@@ -100,6 +104,17 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
         $post->update($request->validated());
+        if($request->file('gym_img') !== null){
+            if($request->file('gym_img')->isValid()){
+                $filename = $request->file('gym_img')->store('public/image');
+                $post->gym_img = basename($filename);
+            }
+        // }else{
+        //     $post->gym_img = 'storage/image/'.$post->gym_img;
+        };
+
+        $post->save();
+
         return redirect()->route('posts.show', [$post->id])->with('message', '内容を変更しました。');
     }
 
