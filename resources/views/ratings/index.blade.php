@@ -1,15 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="card-header bg-dark text-white-50 event-header">EVENT</div>
+<div class="card-header bg-dark text-white-50 event-header">REVIEW</div>
 <div class="card-body row event-contents py-4">
     @if (session('status'))
         <div class="alert alert-success" role="alert">
             {{ session('status') }}
         </div>
     @endif
-
+@if(isset($joinposts))
     @foreach($posts as $post)
+        @foreach($joinposts as $joinpost)
+        @if($post->id == $joinpost->post_id)
         <a href="{{ route('posts.show', $post->id) }}" class="card col-md-5 col-lg-3 event grayscale">
             <div class="card-body text-dark px-0 pb-0">
                 <img src="{{ asset('storage/image/'.$post->gym_img) }}" alt="施設の画像" class="event-img">
@@ -27,6 +29,11 @@
                 </p>
             </div>
         </a>
+        @endif
+        @endforeach
     @endforeach
+@else
+    <p>”まだ評価できるイベントがありません。”</p>
+@endif
 </div>
 @endsection

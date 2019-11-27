@@ -5,9 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\PostRequest;
 use App\Http\Requests\UpdateRequest;
+use Illuminate\Support\Facades\Auth;
+use JD\Cloudder\Facades\Cloudder;
 use App\Post;
 use App\User;
 use App\Gym;
+use App\PostUser;
+use Carbon\Carbon;
+use App\Comment;
+use App\Totalization;
+
 
 class PostController extends Controller
 {
@@ -18,7 +25,16 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
+        $posts = Post::where('event_date', '>=', Carbon::now()->toDateString())->orderBy('event_date')->orderBy('start_time')->orderBy('created_at')->get();
+
+        $dposts = Post::where('event_date', '=<', Carbon::now()->toDateString())->where('end_time', '<', Carbon::now()->toTimeString())->get();
+        foreach($dposts as $dpost){
+            $dcomments = Comment::where('post_id', $dpost->id)->get();
+            foreach($dcomments as $dcomment){
+            $dcomment->delete();
+            }
+        }
+
         $posts->load('gym');
         return view('posts.index', [
             'posts' => $posts,
@@ -48,19 +64,33 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
+        $data = $request->all();
+        if ($gym_img = $request->file('gym_img')) {
+            $image_name = $gym_img->getRealPath();
+            // Cloudinaryへアップロード
+            Cloudder::upload($image_name, null);
+            list($width, $height) = getimagesize($image_name);
+            // 直前にアップロードした画像のユニークIDを取得します。
+            $publicId = Cloudder::getPublicId();
+            // URLを生成します
+            $logoUrl = Cloudder::show($publicId, [
+                'width'     => $width,
+                'height'    => $height
+            ]);
+        }
+
         if($request->file('gym_img')->isValid()){
             $post = new Post;
             $input = $request->all();
             $post = $post->create($input);
             $filename = $request->file('gym_img')->store('public/image');
             $post->gym_img = basename($filename);
-            // if(!isset($input['gym_img'])){
-            //     array_set($input, 'gym_img', basename($filename));
-            // }
 
             $post->save();
         }
+
         return redirect('/');
+
     }
 
     /**
@@ -71,9 +101,23 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        $post->load('gym',);
+        // $postusers = PostUser::where('post_id', $post->id)->get();
+        // dd($postusers)
+        $joinuser = PostUser::where('post_id', $post->id)->where('user_id', Auth::id())->first();
+        $count = PostUser::where('post_id', $post->id)->count();
+        $date = Carbon::now()->toDateString();
+        // dd($post);
+        $totalizations = Totalization::where('user_id', $post->host_id)->avg('evaluation');
+        $totalization = round($totalizations);
+        // dd($totalization);
+
         return view('posts.show', [
             'post' => $post,
+            // 'postusers' => $postusers,
+            'count' => $count,
+            'joinuser' => $joinuser,
+            'date' => $date,
+            'totalization' => $totalization,
         ]);
     }
 
@@ -109,13 +153,11 @@ class PostController extends Controller
                 $filename = $request->file('gym_img')->store('public/image');
                 $post->gym_img = basename($filename);
             }
-        // }else{
-        //     $post->gym_img = 'storage/image/'.$post->gym_img;
         };
 
         $post->save();
 
-        return redirect()->route('posts.show', [$post->id])->with('message', '内容を変更しました。');
+        return redirect()->route('posts.show', [$post->id])->with('status', '内容を変更しました。');
     }
 
     /**

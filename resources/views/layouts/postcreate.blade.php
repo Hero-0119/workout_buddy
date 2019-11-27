@@ -22,18 +22,18 @@
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
 
     <style type="text/css">
-    /* html, body {
+    html, body {
             height: 100%;
             margin: 0;
             padding: 0;
-            } */
+            }
 
-    .jumbotron { background:url('/storage/image/main-bg.jpg') center no-repeat; background-size: cover; height: 100%; background-attachment: fixed; margin-bottom: 0;}
+    .jumbotron { background:url('storage/image/main-bg.jpg') center no-repeat; background-size: cover; height: 100%; background-attachment: fixed;}
     </style>
 
 
 </head>
-<body class="jumbotron">
+<body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-dark shadow-sm fixed-top">
             <div class="container">
@@ -93,10 +93,10 @@
             </div>
         </nav>
 
-        <main class="mb-0 pb-70">
+        <main class="jumbotron mb-0 pb-70">
             <div class="container">
-                <div class="row justify-content-center mx-0">
-                    <div class="col-md-12 sub-bg px-0">
+                <div class="row justify-content-center">
+                    <div class="col-md-12">
                         @yield('content')
                     </div>
                 </div>

@@ -15,8 +15,8 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $guarded = [
-        'id',
+    protected $fillable = [
+        'name', 'email', 'password', 'user_img', 'sex', 'gym', 'introduction',
     ];
 
     /**
@@ -38,6 +38,18 @@ class User extends Authenticatable
     ];
 
     public function posts(){
-        return $this->belongsToMany('App\Post');
+        return $this->hasMany('App\Post');
+    }
+
+    public function comments(){
+        return $this->hasMany('App\Comment');
+    }
+
+    public function participants(){
+        return $this->belongsToMany('App\Post','post_users');
+    }
+
+    public function totalizations(){
+        return $this->hasMany('App\Totalization');
     }
 }

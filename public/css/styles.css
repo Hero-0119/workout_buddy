@@ -1,0 +1,155 @@
+/* 全体 */
+.form-group{
+  margin-left: 0;
+  margin-right: 0;
+}
+.navbar{
+  z-index: 2;
+}
+
+/* .sub-bg{
+  height:100vh
+} */
+
+/* ログイン、登録画面 */
+.log-reg-form {
+height: 90vh;
+display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.log-reg-card{
+  opacity: .9;
+}
+.log-reg-card-header {
+  background-color: #AAAAAA;
+}
+.log-reg-card-body {
+  background-color: silver;
+}
+.log-reg-input{
+  background-color: #EEEEEE;
+}
+
+/* イベント一覧画面 */
+.event{
+  z-index: 1;
+  box-shadow: 0 0 3px 0 rgba(0,0,0,.12), 0 2px 3px 0 rgba(0,0,0,.22);
+	transition: .3s;
+}
+.event:hover{
+  box-shadow: 0 15px 15px -5px rgba(0, 51, 51, 1);
+  transform: translateY(-1px);
+  border-color: blueviolet;
+}
+.grayscale img {
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+    -webkit-transition: .3s ease-in-out;
+    transition: .3s ease-in-out;
+}
+.grayscale:hover img {
+    -webkit-filter: grayscale(0);
+    filter: grayscale(0);
+}
+.review-contents{
+  justify-content: space-around;
+}
+a:hover{
+  text-decoration: none;
+}
+.event-img{
+  width: 100%;
+  height: 162px;
+}
+
+/* イベント詳細ページ */
+.user-show .detail-right{
+  color: #f8f9fa;
+  background-color: rgba(0,0,0,.50);
+}
+.event-show-img{
+  width: 100%;
+  height: 300px;
+}
+.event-user-name{
+  height: 21px;
+}
+.event-user-name i::before{
+  height: 18px;
+}
+.lower-btn2{
+  margin-bottom: 8px;
+}
+
+/* ユーザーページ */
+.form-user{
+  opacity: .9;
+}
+.user-bg{
+  background-color: rgba(0,0,0,.50);
+}
+.user-form .form-group{
+  /* text-lightを適用 */
+  color: #f8f9fa;
+}
+
+/* ポストクリエイト画面 */
+.input-group .input-group-text{
+  margin-bottom: 2px;
+}
+.create-date .form-group{
+  margin-bottom: 0;
+}
+
+@media (max-width: 575.98px) {
+  .event-header{
+    margin-top: 50px;
+  }
+  .lower-btn{
+    margin-bottom: 8px;
+  }
+  .event-show-img{
+  width: 100%;
+  height: 150px;
+}
+.detail-left{
+  padding-bottom: 20px;
+}
+
+.card-i {
+  margin-bottom: 8px;
+  padding: 0 3px;
+}
+.create-date {
+  padding: 0;
+}
+.event-contents a{
+  margin-bottom: 24px;
+}
+.show-card{
+  padding-left: 12px;
+}
+.show-card span{
+  padding-left: 30px;
+}
+}
+
+@media (min-width:768px) and ( max-width:1024px){
+.event-contents a{
+  margin: 0 27px 24px;
+}
+.show-card span{
+  padding-left: 45px;
+  padding-right: 0;
+}
+}
+
+@media (min-width:1024px){
+.event-contents a{
+  margin: 0 45px 24px;
+}
+.show-card span{
+  padding-left: 0;
+}
+}

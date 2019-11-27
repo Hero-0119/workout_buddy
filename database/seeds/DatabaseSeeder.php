@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
             CommentsTableSeeder::class,
             GymsTableSeeder::class,
             PostsTableSeeder::class,
-            PostUserTableSeeder::class,
+            // PostUsersTableSeeder::class,
             RatingsTableSeeder::class,
             TotalizationsTableSeeder::class,
         ]);

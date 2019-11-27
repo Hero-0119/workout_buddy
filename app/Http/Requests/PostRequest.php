@@ -30,7 +30,7 @@ class PostRequest extends FormRequest
                 'fee' => 'nullable',
                 'number_limit' => 'required',
                 'sex_limit' => 'required',
-                'user_id' => 'required',
+                'host_id' => 'required',
                 'gym_id' => 'required',
                 'event_date' => 'required|date',
                 'start_time' => 'required|date_format:H:i',

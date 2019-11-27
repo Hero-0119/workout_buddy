@@ -15,7 +15,7 @@ class CreatePostsTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('host_id');
             $table->unsignedInteger('gym_id');
             $table->string('title');
             $table->text('about_group')->nullable();
@@ -23,10 +23,10 @@ class CreatePostsTable extends Migration
             $table->timestamps();
             $table->bigInteger('fee')->nullable();
             $table->string('sex_limit')->nullable();
-            $table->string('number_limit')->nullable();
+            $table->integer('number_limit')->nullable();
             $table->string('gym_img')->nullable();
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('host_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('gym_id')->references('id')->on('gyms')->onDelete('cascade');
         });
     }
